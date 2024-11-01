@@ -2,7 +2,6 @@ package com.aanos.backend.controller;
 
 import com.aanos.backend.entity.Customer;
 import com.aanos.backend.service.CustomerService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,7 @@ public class CustomerController {
     private CustomerService customerService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping
+    @GetMapping("/v1/customers")
     public List<Customer> getAllCustomers() {
         return customerService.getAllCustomers();
     }
@@ -29,7 +28,7 @@ public class CustomerController {
         return customerService.getCustomerById(id);
     }
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @PostMapping
+    @PostMapping("/v1/customers")
     public Customer createCustomer(@RequestBody Customer customer) {
         return customerService.saveCustomer(customer);
     }
@@ -44,12 +43,6 @@ public class CustomerController {
     @DeleteMapping("/v1/customers/{id}")
     public ResponseEntity<Customer> deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
-        return ResponseEntity.noContent().build();
-    }
-    @ResponseStatus(HttpStatus.GONE)
-    @DeleteMapping()
-    public ResponseEntity<Void> deleteAllCustomers() {
-        customerService.deleteAllCustomers();
         return ResponseEntity.noContent().build();
     }
 
