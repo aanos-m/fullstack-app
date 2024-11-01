@@ -2,47 +2,55 @@ package com.aanos.backend.controller;
 
 import com.aanos.backend.entity.Customer;
 import com.aanos.backend.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/customers")
+@RequestMapping("/api")
 public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public List<Customer> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
-    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/v1/customers/{id}")
     public Customer getCustomerById(@PathVariable Long id) {
         return customerService.getCustomerById(id);
     }
-
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping
     public Customer createCustomer(@RequestBody Customer customer) {
         return customerService.saveCustomer(customer);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @RequestBody Customer customerDetails) {
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PutMapping(value = "/v1/customers/{id}")
+    public ResponseEntity<Customer> updateCustomers(@PathVariable Long id, @RequestBody Customer customerDetails) {
         return ResponseEntity.ok(customerService.updateCustomer(id, customerDetails));
     }
 
-    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.GONE)
+    @DeleteMapping("/v1/customers/{id}")
     public ResponseEntity<Customer> deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
         return ResponseEntity.noContent().build();
     }
+    @ResponseStatus(HttpStatus.GONE)
     @DeleteMapping()
     public ResponseEntity<Void> deleteAllCustomers() {
         customerService.deleteAllCustomers();
         return ResponseEntity.noContent().build();
     }
+
 }
