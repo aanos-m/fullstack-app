@@ -1,10 +1,7 @@
 package com.aanos.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-
-import java.time.LocalDate;
 
 @Entity
 public class Customer {
@@ -27,19 +24,20 @@ public class Customer {
 
     private String profilePic;
 
-    private LocalDate creationDate;
+    private String creationDate;
 
     // Constructors, Getters, and Setters
     public Customer () {
     }
 
-    public Customer(String cusUsername, String name, String email, String address, String dob, String profilePic) {
+    public Customer(String cusUsername, String name, String email, String address, String dob, String profilePic, String currentDate) {
         this.cusUsername = cusUsername;
         this.name = name;
         this.email = email;
         this.address = address;
         this.dob = dob;
         this.profilePic = profilePic;
+        this.creationDate = currentDate;
     }
 
     public Long getId() {
@@ -66,7 +64,7 @@ public class Customer {
     public void setDob(String dob) { this.dob = dob; }
     public String getProfilePic() { return profilePic; }
     public void setProfilePic(String profilePic) { this.profilePic = profilePic; }
-    @JsonIgnore
-    public LocalDate getCreationDate() { return creationDate; }
-    public void setCreationDate(LocalDate creationDate) { this.creationDate = creationDate; }
+    public String getCreationDate() { return creationDate; }
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    public void setCreationDate(String creationDate) { this.creationDate = creationDate; }
 }
