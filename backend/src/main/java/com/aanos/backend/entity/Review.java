@@ -12,22 +12,27 @@ public class Review {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
-    @Column(name = "customer_id")
-    private Long customerId;
-    @Column(name = "product_id")
-    private Long productId;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     private String reviewDescription;
 
+    //Constructors
     public Review() {
     }
-
-    public Review(Long customerId, Long productId, String reviewDescription) {
-        this.customerId = customerId;
-        this.productId = productId;
+    public Review(Long id, Product product, Customer customer, String reviewDescription) {
+        this.id = id;
+        this.product = product;
+        this.customer = customer;
         this.reviewDescription = reviewDescription;
     }
 
+    //Getters and Setters
     public Long getId() {
         return id;
     }
@@ -36,21 +41,22 @@ public class Review {
         this.id = id;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
+
     public String getReviewDescription() {
         return reviewDescription;
     }
